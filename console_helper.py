@@ -8,6 +8,7 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+    GRAY = '\033[15m'
 
 def printc(message, color):
     print(color + message + bcolors.ENDC)
