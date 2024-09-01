@@ -1,9 +1,10 @@
 import time
 from atproto import Client # type: ignore
-from console_helper import print_info, print_success
+from console_helper import print_info, print_success, print_error
 
 WAIT_TIME_BETWEEN_PAGINATED_CALLS=1
 WAIT_TIME_BETWEEN_FOLLOWS=0.1
+WAIT_TIME_BETWEEN_LIKES=0.1
 
 def create_authenticated_client(username, password):
     print_info("Authenticating with user " + username)
@@ -64,3 +65,12 @@ def follow_all(list, client, current_follows=[], skip_check_following=True, hand
             client.follow(candidate_follow[did_prop])
             time.sleep(WAIT_TIME_BETWEEN_FOLLOWS)
 
+
+def parse_post_url(url):
+    if url is None:
+        print_error("Post url is required: -e <url>")
+        exit(1)
+    parts = url.split('/')
+    author_handle=parts[4]
+    post_id=parts[6]
+    return(post_id, author_handle)

@@ -5,8 +5,10 @@ from helpers import get_credentials
 from commands.FollowAllFollowersCommand import FollowAllFollowersCommand
 from commands.FollowWhoLikedPost import FollowWhoLikedPost
 from commands.FollowWhoLikedMyPosts import FollowWhoLikedMyPosts
+from commands.LikePostThread import LikePostThread
 
 #TODO: locale
+#TODO: session reuse: https://github.com/MarshalX/atproto/blob/main/examples/advanced_usage/session_reuse.py
 #TODO: linting
 #TODO: tests
 #TODO: GH workflow
@@ -28,6 +30,7 @@ commands = {
     "ffollowers": FollowAllFollowersCommand(client),
     "fpostlikes": FollowWhoLikedPost(client),
     "fallmypostlikes": FollowWhoLikedMyPosts(client),
+    "likethread": LikePostThread(client)
 }
 
 if args.command not in commands.keys():

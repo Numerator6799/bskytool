@@ -5,6 +5,7 @@ Features:
 - Follow back who follows you
 - Follow back who liked your posts
 - Follow back who liked a post
+- Like a post thread
 
 ## Installation
 Install [Python3](https://www.python.org/)
@@ -36,3 +37,12 @@ Follows everyone who liked the posts you created
 ```bash
 python3 bsky.py fallmypostlikes -u your_username -p your_password
 ```
+
+### Like a post thread
+Like all the replies of a post
+
+```bash
+python3 bsky.py likethread -e <post_url> -u your_username -p your_password
+```
+
+The `<post_url>` is the url for the post, for instance: https://bsky.app/profile/bsky.app/post/3l327azz5qg24
