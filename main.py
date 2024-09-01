@@ -2,7 +2,8 @@ import sys
 from console_helper import bcolors, printc
 from bluesky_helper import create_authenticated_client
 from commands.FollowAllFollowersCommand import FollowAllFollowersCommand
-from commands.FollowLikeActorsFromPost import FollowLikeActorsFromPost
+from commands.FollowWhoLikedPost import FollowWhoLikedPost
+from commands.FollowWhoLikedMyPosts import FollowWhoLikedMyPosts
 
 #TODO: locale
 if(len(sys.argv) < 3):
@@ -12,7 +13,8 @@ if(len(sys.argv) < 3):
 client=create_authenticated_client(sys.argv[1], sys.argv[2])
 commands = {
     1: FollowAllFollowersCommand(client),
-    2: FollowLikeActorsFromPost(client),
+    2: FollowWhoLikedPost(client),
+    3: FollowWhoLikedMyPosts(client)
 }
 
 print("What would you like to do?")

@@ -27,21 +27,27 @@ def get_paginated(func, cid, list_prop):
             stop = True
     return list
 
-def follow_all(list, client, handle_prop="handle", did_prop="did"):
-    # maybe getting followers for comparison is not needed, 
-    # but let's try to avoid too many calls to follow
+def get_follows(client):
     follows = get_paginated(func=client.get_follows, cid=client.me.handle, list_prop="follows")
     print("Got " + str(len(follows)) + " follows")
-    for _, p in enumerate(list):
+    return follows
+
+def follow_all(list, client, current_follows=[], handle_prop="handle", did_prop="did"):
+    # maybe getting followers for comparison is not needed, 
+    # but let's try to avoid too many calls to follow
+    follows=current_follows
+    if len(follows) == 0:
+        follows = get_follows(client)
+    for _, candidate_follow in enumerate(list):
         already_follow=False
         for _, follow in enumerate(follows):
-            if follow.handle == p[handle_prop]:
+            if follow.handle == candidate_follow[handle_prop]:
                 already_follow=True
                 break
         if already_follow:
-            printc("You already follow " + p[handle_prop], bcolors.OKGREEN)
+            printc("You already follow " + candidate_follow[handle_prop], bcolors.OKGREEN)
         else:
-            print("Following " + p[handle_prop])
-            client.follow(p[did_prop])
+            print("Following " + candidate_follow[handle_prop])
+            client.follow(candidate_follow[did_prop])
             time.sleep(WAIT_TIME_BETWEEN_FOLLOWS)
 
