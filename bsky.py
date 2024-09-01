@@ -1,3 +1,4 @@
+import sys
 import argparse
 from console_helper import print_error
 from bluesky_helper import create_authenticated_client
@@ -9,9 +10,7 @@ from commands.LikePostThread import LikePostThread
 
 #TODO: locale
 #TODO: session reuse: https://github.com/MarshalX/atproto/blob/main/examples/advanced_usage/session_reuse.py
-#TODO: linting
-#TODO: tests
-#TODO: GH workflow
+#TODO: tests + gh workflow
 parser = argparse.ArgumentParser(
     prog="bsky",
     description="Tool for BlueSky tricks",
@@ -35,6 +34,6 @@ commands = {
 
 if args.command not in commands.keys():
     print_error("Invalid command")
-    exit(1)
+    sys.exit(1)
 
 commands[args.command].run(args)

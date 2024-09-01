@@ -1,4 +1,4 @@
-class bcolors:
+class Colors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
@@ -11,13 +11,13 @@ class bcolors:
     GRAY = '\033[15m'
 
 def printc(message, color):
-    print(color + message + bcolors.ENDC)
+    print(color + message + Colors.ENDC)
 
 def print_info(message):
-    printc(message, bcolors.OKCYAN)
+    printc(message, Colors.OKCYAN)
 
 def print_success(message):
-    printc(message, bcolors.OKGREEN)
+    printc(message, Colors.OKGREEN)
 
 def print_error(message):
-    printc(message, bcolors.FAIL)
+    printc(message, Colors.FAIL)
