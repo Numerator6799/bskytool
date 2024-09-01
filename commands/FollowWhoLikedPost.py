@@ -1,4 +1,4 @@
-from bluesky_helper import get_paginated, follow_all
+from bluesky_helper import get_page_and_run, follow_all
 from console_helper import print_info, print_success, print_error
 from commands.BaseCommand import BaseCommand
 
@@ -17,8 +17,15 @@ class FollowWhoLikedPost(BaseCommand):
         self.follow_who_liked_post(post)
 
     def follow_who_liked_post(self, post, current_follows=[]):
-        print_info("Getting all likes for post")
-        likes = get_paginated(func=self.client.get_likes, cid=post.uri, list_prop="likes")
-        print_success("Got " + str(len(likes)) + " likes")
+        get_page_and_run(
+            page_func=self.client.get_likes, 
+            cid=post.uri, 
+            list_prop="likes",
+            action=lambda likes: self.get_users_and_follow_all(likes)
+            )
+        
+
+    def get_users_and_follow_all(self, likes):
         users = [like.actor for like in likes]
-        follow_all(users, self.client, current_follows)
+        follow_all(users, self.client, skip_check_following=True)
+        

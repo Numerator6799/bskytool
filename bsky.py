@@ -7,6 +7,9 @@ from commands.FollowWhoLikedPost import FollowWhoLikedPost
 from commands.FollowWhoLikedMyPosts import FollowWhoLikedMyPosts
 
 #TODO: locale
+#TODO: linting
+#TODO: tests
+#TODO: GH workflow
 parser = argparse.ArgumentParser(
     prog="bsky",
     description="Tool for BlueSky tricks",

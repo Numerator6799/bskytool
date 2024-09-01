@@ -3,7 +3,7 @@ from atproto import Client # type: ignore
 from console_helper import print_info, print_success
 
 WAIT_TIME_BETWEEN_PAGINATED_CALLS=1
-WAIT_TIME_BETWEEN_FOLLOWS=1
+WAIT_TIME_BETWEEN_FOLLOWS=0.1
 
 def create_authenticated_client(username, password):
     print_info("Authenticating with user " + username)
@@ -27,24 +27,36 @@ def get_paginated(func, cid, list_prop):
             stop = True
     return list
 
+def get_page_and_run(page_func, cid, list_prop, action):
+    stop = False
+    cursor=None
+    while not stop:
+        print("Getting next " + list_prop + "...")
+        resp = page_func(cid, cursor=cursor, limit=100)
+        action(resp[list_prop])
+        cursor = resp.cursor
+        if cursor == None:
+            stop = True
+
 def get_follows(client):
     print_info("Getting current follows")
     follows = get_paginated(func=client.get_follows, cid=client.me.handle, list_prop="follows")
     print_success("Got " + str(len(follows)) + " follows")
     return follows
 
-def follow_all(list, client, current_follows=[], handle_prop="handle", did_prop="did"):
+def follow_all(list, client, current_follows=[], skip_check_following=True, handle_prop="handle", did_prop="did"):
     # maybe getting followers for comparison is not needed, 
     # but let's try to avoid too many calls to follow
     follows=current_follows
-    if len(follows) == 0:
+    if len(follows) == 0 and not skip_check_following:
         follows = get_follows(client)
     for _, candidate_follow in enumerate(list):
         already_follow=False
-        for _, follow in enumerate(follows):
-            if follow.handle == candidate_follow[handle_prop]:
-                already_follow=True
-                break
+        if not skip_check_following:
+            for _, follow in enumerate(follows):
+                if follow.handle == candidate_follow[handle_prop]:
+                    already_follow=True
+                    break
         if already_follow:
             print_success("You already follow " + candidate_follow[handle_prop])
         else:

@@ -1,5 +1,4 @@
-from bluesky_helper import get_paginated, follow_all
-from console_helper import print_info, print_success
+from bluesky_helper import get_page_and_run, follow_all
 from commands.BaseCommand import BaseCommand
 
 class FollowAllFollowersCommand(BaseCommand):
@@ -7,7 +6,10 @@ class FollowAllFollowersCommand(BaseCommand):
         BaseCommand.__init__(self, client, "Follow my followers")
     
     def run(self, args):
-        print_info("Getting current followers")
-        followers = get_paginated(func=self.client.get_followers, cid=self.client.me.handle, list_prop="followers")
-        print_success("Got " + str(len(followers)) + " followers")
-        follow_all(followers, self.client)
+        get_page_and_run(
+            page_func=self.client.get_followers, 
+            cid=self.client.me.handle, 
+            list_prop="followers",
+            action=lambda followers: follow_all(followers, self.client, skip_check_following=True)
+            )
+    
