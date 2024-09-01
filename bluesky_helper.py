@@ -1,19 +1,19 @@
 import time
 from atproto import Client # type: ignore
-from console_helper import bcolors, printc
+from console_helper import print_info, print_success
 
 WAIT_TIME_BETWEEN_PAGINATED_CALLS=1
 WAIT_TIME_BETWEEN_FOLLOWS=1
 
 def create_authenticated_client(username, password):
-    printc("Authenticating with user " + username, bcolors.OKCYAN)
+    print_info("Authenticating with user " + username)
     client = Client(base_url='https://bsky.social')
     client.login(username, password)
-    printc("Welcome, " + client.me.handle, bcolors.OKGREEN)
+    print_success("Welcome, " + client.me.handle)
     return client
 
 def get_paginated(func, cid, list_prop):
-    printc("Getting a very big list, please wait...", bcolors.GRAY)
+    print_info("Please wait...")
     stop = False
     list = []
     cursor=None
@@ -28,8 +28,9 @@ def get_paginated(func, cid, list_prop):
     return list
 
 def get_follows(client):
+    print_info("Getting current follows")
     follows = get_paginated(func=client.get_follows, cid=client.me.handle, list_prop="follows")
-    print("Got " + str(len(follows)) + " follows")
+    print_success("Got " + str(len(follows)) + " follows")
     return follows
 
 def follow_all(list, client, current_follows=[], handle_prop="handle", did_prop="did"):
@@ -45,7 +46,7 @@ def follow_all(list, client, current_follows=[], handle_prop="handle", did_prop=
                 already_follow=True
                 break
         if already_follow:
-            printc("You already follow " + candidate_follow[handle_prop], bcolors.OKGREEN)
+            print_success("You already follow " + candidate_follow[handle_prop])
         else:
             print("Following " + candidate_follow[handle_prop])
             client.follow(candidate_follow[did_prop])

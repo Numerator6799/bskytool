@@ -1,30 +1,34 @@
-import sys
-from console_helper import bcolors, printc
+import argparse
+from console_helper import print_error
 from bluesky_helper import create_authenticated_client
+from helpers import get_credentials
 from commands.FollowAllFollowersCommand import FollowAllFollowersCommand
 from commands.FollowWhoLikedPost import FollowWhoLikedPost
 from commands.FollowWhoLikedMyPosts import FollowWhoLikedMyPosts
 
 #TODO: locale
-if(len(sys.argv) < 3):
-    printc("Username and password required", bcolors.FAIL)
-    exit(1)
+parser = argparse.ArgumentParser(
+    prog="bsky",
+    description="Tool for BlueSky tricks",
+    epilog="Thanks for using the tool!")
 
-client=create_authenticated_client(sys.argv[1], sys.argv[2])
+parser.add_argument('command')
+parser.add_argument('-e', '--element', required=False)
+parser.add_argument('-u', '--username', required=False)
+parser.add_argument('-p', '--password', required=False)
+args=parser.parse_args()
+
+(username, password) = get_credentials(args)
+
+client=create_authenticated_client(username, password)
 commands = {
-    1: FollowAllFollowersCommand(client),
-    2: FollowWhoLikedPost(client),
-    3: FollowWhoLikedMyPosts(client)
+    "ffollowers": FollowAllFollowersCommand(client),
+    "fpostlikes": FollowWhoLikedPost(client),
+    "fallmypostlikes": FollowWhoLikedMyPosts(client),
 }
 
-#TODO: cli commands
-#TODO: parse post url to run post-based commands
-print("What would you like to do?")
-for index, (key, value) in enumerate(commands.items()):
-    print(str(key) + " - " + value.title)
-#TODO: validate user input
-choice = int(input("Enter your choice: "))
+if args.command not in commands.keys():
+    print_error("Invalid command")
+    exit(1)
 
-commands[choice].run()
-    
-    
+commands[args.command].run(args)

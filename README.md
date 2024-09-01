@@ -13,7 +13,26 @@ pip install atproto
 ```
 
 ## Usage
+
+### Follow back your followers
+Follows back everyone that follows you
+
 ```bash
-python3 bsky.py your_username your_password
+python3 bsky.py ffollowers -u your_username -p your_password
 ```
-The tool will prompt you to choose a command.
+
+### Follow who liked a post
+Follows everyone who liked a post
+
+```bash
+python3 bsky.py fpostlikes -e <post_url> -u your_username -p your_password
+```
+
+The `<post_url>` is the url for the post, for instance: https://bsky.app/profile/bsky.app/post/3l327azz5qg24
+
+### Follow who liked all your posts
+Follows everyone who liked the posts you created
+
+```bash
+python3 bsky.py fallmypostlikes -u your_username -p your_password
+```

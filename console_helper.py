@@ -12,3 +12,12 @@ class bcolors:
 
 def printc(message, color):
     print(color + message + bcolors.ENDC)
+
+def print_info(message):
+    printc(message, bcolors.OKCYAN)
+
+def print_success(message):
+    printc(message, bcolors.OKGREEN)
+
+def print_error(message):
+    printc(message, bcolors.FAIL)
