@@ -1,5 +1,9 @@
+
+
 [MESSAGES CONTROL]
 disable=missing-module-docstring,
         missing-function-docstring,
         missing-class-docstring,
-        W0511
+        W0511,
+        too-few-public-methods,
+        unnecessary-lambda

@@ -3,10 +3,10 @@ import argparse
 from console_helper import print_error
 from bluesky_helper import create_authenticated_client
 from helpers import get_credentials
-from commands.FollowAllFollowersCommand import FollowAllFollowersCommand
-from commands.FollowWhoLikedPost import FollowWhoLikedPost
-from commands.FollowWhoLikedMyPosts import FollowWhoLikedMyPosts
-from commands.LikePostThread import LikePostThread
+from commands.follow_all_followers_command import FollowAllFollowersCommand
+from commands.follow_who_liked_post import FollowWhoLikedPost
+from commands.follow_who_liked_my_posts import FollowWhoLikedMyPosts
+from commands.like_post_thread import LikePostThread
 
 #TODO: locale
 #TODO: session reuse: https://github.com/MarshalX/atproto/blob/main/examples/advanced_usage/session_reuse.py

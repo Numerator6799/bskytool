@@ -46,3 +46,15 @@ python3 bsky.py likethread -e <post_url> -u your_username -p your_password
 ```
 
 The `<post_url>` is the url for the post, for instance: https://bsky.app/profile/bsky.app/post/3l327azz5qg24
+
+## Linting
+
+### Installation
+```bash
+pip install pylint
+```
+
+### Usage
+```
+pylint */*.py *.py
+```

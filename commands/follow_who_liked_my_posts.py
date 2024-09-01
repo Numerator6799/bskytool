@@ -1,12 +1,11 @@
-from bluesky_helper import get_page_and_run
-from commands.BaseCommand import BaseCommand
-from commands.FollowWhoLikedPost import FollowWhoLikedPost
+from commands.base_command import BaseCommand
+from commands.follow_who_liked_post import FollowWhoLikedPost
 
 class FollowWhoLikedMyPosts(BaseCommand):
     def __init__(self, client):
         BaseCommand.__init__(self, client, "Follow who liked all my posts")
-    
-    def run(self, args):
+
+    def run(self, _):
         subcommand = FollowWhoLikedPost(self.client)
         #follows = get_follows(self.client)
         #TODO: handle feed pages
