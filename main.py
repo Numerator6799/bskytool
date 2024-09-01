@@ -1,5 +1,6 @@
 import sys
 import time
+from console_helper import bcolors, printc
 from atproto import Client # type: ignore
 
 WAIT_TIME_BETWEEN_PAGINATED_CALLS=3
@@ -32,30 +33,21 @@ def follow_all(list, client, handle_prop="handle", did_prop="did"):
                 already_follow=True
                 break
         if already_follow:
-            print(bcolors.OKGREEN + "You already follow " + p[handle_prop] + bcolors.ENDC)
+            printc("You already follow " + p[handle_prop], bcolors.OKGREEN)
         else:
             print("Following " + p[handle_prop])
             client.follow(p[did_prop])
             time.sleep(WAIT_TIME_BETWEEN_FOLLOWS)
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+
 
 #TODO: validate args
 username = sys.argv[1]
 #TODO: locale
-print(bcolors.OKCYAN + "Authenticating with user " + username + bcolors.ENDC)
+printc("Authenticating with user " + username, bcolors.OKCYAN)
 client = Client(base_url='https://bsky.social')
 client.login(username, sys.argv[2])
-print(bcolors.OKGREEN + "Welcome, " + client.me.handle + bcolors.ENDC)
+printc("Welcome, " + client.me.handle, bcolors.OKGREEN)
 #TODO: menu array, validate user input
 print("What would you like to do?")
 print("1 - Follow my followers")
