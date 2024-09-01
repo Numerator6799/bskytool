@@ -17,6 +17,8 @@ commands = {
     3: FollowWhoLikedMyPosts(client)
 }
 
+#TODO: cli commands
+#TODO: parse post url to run post-based commands
 print("What would you like to do?")
 for index, (key, value) in enumerate(commands.items()):
     print(str(key) + " - " + value.title)
