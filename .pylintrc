@@ -6,4 +6,7 @@ disable=missing-module-docstring,
         missing-class-docstring,
         W0511,
         too-few-public-methods,
-        unnecessary-lambda
+        unnecessary-lambda,
+        line-too-long,
+        too-many-arguments,
+        consider-iterating-dictionary

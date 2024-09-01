@@ -48,12 +48,14 @@ def get_follows(client):
 
 def follow_all(users,
                client,
-               current_follows=[],
+               current_follows=None,
                skip_check_following=True,
                handle_prop="handle",
                did_prop="did"):
     # maybe getting followers for comparison is not needed,
-    # but let's try to avoid too many calls to follow
+    # but let's try to avoid too many calls to
+    if current_follows is None:
+        current_follows=[]
     follows=current_follows
     if len(follows) == 0 and not skip_check_following:
         follows = get_follows(client)
