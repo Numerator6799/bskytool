@@ -1,5 +1,5 @@
 import time
-from bluesky_helper import parse_post_url, WAIT_TIME_BETWEEN_LIKES
+from bluesky_helper import parse_post_url, WAIT_TIME_BETWEEN_LIKES, WAIT_TIME_BETWEEN_FOLLOWS
 from commands.base_command import BaseCommand
 
 class LikePostThread(BaseCommand):
@@ -15,4 +15,8 @@ class LikePostThread(BaseCommand):
             print("Liking reply " + str(index + 1) + " of " + str(num_replies) + " by " + post.post.author.handle)
             time.sleep(WAIT_TIME_BETWEEN_LIKES)
             self.client.like(post.post.uri, post.post.cid)
+            if args.follow:
+                time.sleep(WAIT_TIME_BETWEEN_FOLLOWS)
+                print("Following " + post.post.author.handle)
+                self.client.follow(post.post.author.did)
    
