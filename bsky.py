@@ -1,12 +1,15 @@
 import sys
 import argparse
+import os
+import json
 from console_helper import print_error
-from bluesky_helper import create_authenticated_client
+from bluesky_repo import create_authenticated_client
 from helpers import get_credentials
 from commands.follow_all_followers_command import FollowAllFollowersCommand
 from commands.follow_who_liked_post import FollowWhoLikedPost
 from commands.follow_who_liked_my_posts import FollowWhoLikedMyPosts
 from commands.like_post_thread import LikePostThread
+from commands.build_cache import BuildCache
 
 #TODO: cache
 #TODO: locale
@@ -26,12 +29,24 @@ args=parser.parse_args()
 
 (username, password) = get_credentials(args)
 
+# Initialize cache
+cache = None
+
+file_path = 'fcache.json'
+if os.path.exists(file_path):
+    with open(file_path, 'r') as f:
+        cache = json.load(f)
+    print("Cache loaded.")
+else:
+    print("JSON file does not exist.")
+
 client=create_authenticated_client(username, password)
 commands = {
-    "ffollowers": FollowAllFollowersCommand(client),
-    "fpostlikes": FollowWhoLikedPost(client),
-    "fallmypostlikes": FollowWhoLikedMyPosts(client),
-    "likethread": LikePostThread(client)
+    "ffollowers": FollowAllFollowersCommand(client, cache),
+    "fpostlikes": FollowWhoLikedPost(client, cache),
+    "fallmypostlikes": FollowWhoLikedMyPosts(client, cache),
+    "likethread": LikePostThread(client, cache),
+    "bcache": BuildCache(client, cache)
 }
 
 if args.command not in commands.keys():

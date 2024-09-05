@@ -2,8 +2,8 @@ from commands.base_command import BaseCommand
 from commands.follow_who_liked_post import FollowWhoLikedPost
 
 class FollowWhoLikedMyPosts(BaseCommand):
-    def __init__(self, client):
-        BaseCommand.__init__(self, client, "Follow who liked all my posts")
+    def __init__(self, client, cache):
+        BaseCommand.__init__(self, client, cache, "Follow who liked all my posts")
 
     def run(self, _):
         subcommand = FollowWhoLikedPost(self.client)

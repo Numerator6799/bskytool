@@ -1,10 +1,10 @@
 import time
-from bluesky_helper import parse_post_url, WAIT_TIME_BETWEEN_LIKES, WAIT_TIME_BETWEEN_FOLLOWS
+from bluesky_repo import parse_post_url, WAIT_TIME_BETWEEN_LIKES, WAIT_TIME_BETWEEN_FOLLOWS
 from commands.base_command import BaseCommand
 
 class LikePostThread(BaseCommand):
-    def __init__(self, client):
-        BaseCommand.__init__(self, client, "Like post thread")
+    def __init__(self, client, cache):
+        BaseCommand.__init__(self, client, cache, "Like post thread")
 
     def run(self, args):
         (post_id, author_handle) = parse_post_url(args.element)

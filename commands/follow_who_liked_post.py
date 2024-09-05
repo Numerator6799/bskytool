@@ -1,9 +1,9 @@
-from bluesky_helper import get_page_and_run, follow_all, parse_post_url
+from bluesky_repo import get_page_and_run, follow_all, parse_post_url
 from commands.base_command import BaseCommand
 
 class FollowWhoLikedPost(BaseCommand):
-    def __init__(self, client):
-        BaseCommand.__init__(self, client, "Follow who liked post")
+    def __init__(self, client, cache):
+        BaseCommand.__init__(self, client, cache, "Follow who liked post")
 
     def run(self, args):
         (post_id, author_handle) = parse_post_url(args.element)
@@ -20,5 +20,5 @@ class FollowWhoLikedPost(BaseCommand):
 
     def get_users_and_follow_all(self, likes):
         users = [like.actor for like in likes]
-        follow_all(users, self.client, skip_check_following=True)
+        follow_all(users, self.client, self.cache["follows"])
         
