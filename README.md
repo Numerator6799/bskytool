@@ -3,8 +3,8 @@ A tool for [BlueSky](https://bsky.app) tricks.
 
 Features:
 - Follow back who follows you
-- Follow back who liked your posts
-- Follow back who liked a post
+- Follow who liked your posts
+- Follow who liked a post
 - Like a post thread
 
 ## Installation
