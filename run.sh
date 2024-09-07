@@ -4,7 +4,7 @@ python3 bsky.py ffollowers
 python3 bsky.py fallmypostlikes
 
 # Usage: 
-# craete a urlwatch.txt
+# create a urlwatch.txt
 # add links (one per line) to posts you want
 # to track and follow who liked them
 URL_FILE="urlwatch.txt"
