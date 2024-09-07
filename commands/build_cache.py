@@ -17,3 +17,4 @@ class BuildCache(BaseCommand):
             }
         with open('fcache.json', 'w', encoding='utf-8') as f:
             json.dump(cache, f, ensure_ascii=False, indent=4)
+            

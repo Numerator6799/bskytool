@@ -48,7 +48,7 @@ def get_follows(client):
     return follows
 
 def get_followers(client):
-    print_info("Getting current followsers")
+    print_info("Getting current followers")
     followers = get_paginated(func=client.get_followers, cid=client.me.handle, list_prop="followers")
     print_success("Got " + str(len(followers)) + " followers")
     return followers

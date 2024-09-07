@@ -1,17 +1,14 @@
 import sys
 import argparse
-import os
-import json
 from console_helper import print_error
 from bluesky_repo import create_authenticated_client
-from helpers import get_credentials
+from helpers import get_credentials, open_cache
 from commands.follow_all_followers_command import FollowAllFollowersCommand
 from commands.follow_who_liked_post import FollowWhoLikedPost
 from commands.follow_who_liked_my_posts import FollowWhoLikedMyPosts
 from commands.like_post_thread import LikePostThread
 from commands.build_cache import BuildCache
 
-#TODO: cache
 #TODO: locale
 #TODO: session reuse: https://github.com/MarshalX/atproto/blob/main/examples/advanced_usage/session_reuse.py
 #TODO: tests + gh workflow
@@ -29,16 +26,7 @@ args=parser.parse_args()
 
 (username, password) = get_credentials(args)
 
-# Initialize cache
-cache = None
-
-file_path = 'fcache.json'
-if os.path.exists(file_path):
-    with open(file_path, 'r') as f:
-        cache = json.load(f)
-    print("Cache loaded.")
-else:
-    print("JSON file does not exist.")
+cache = open_cache()
 
 client=create_authenticated_client(username, password)
 commands = {

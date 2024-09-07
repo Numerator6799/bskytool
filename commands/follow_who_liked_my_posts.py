@@ -6,7 +6,7 @@ class FollowWhoLikedMyPosts(BaseCommand):
         BaseCommand.__init__(self, client, cache, "Follow who liked all my posts")
 
     def run(self, _):
-        subcommand = FollowWhoLikedPost(self.client)
+        subcommand = FollowWhoLikedPost(self.client, self.cache)
         #follows = get_follows(self.client)
         #TODO: handle feed pages
         feed = self.client.get_author_feed(self.client.me.handle)
